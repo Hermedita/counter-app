@@ -1,21 +1,27 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { Tab1Page } from '../tab1/tab1.page';
+import { TabsPage } from './tabs.page';
 
-describe('Tab1Page', () => {
-  let component: Tab1Page;
-  let fixture: ComponentFixture<Tab1Page>;
+describe('TabsPage',()=>{
+  let component: TabsPage;
+  let fixture: ComponentFixture<TabsPage>;
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(Tab1Page);
+  beforeEach(async ()=>{
+    await TestBed.configureTestingModule({
+      imports: [TabsPage],
+      providers: [provideRouter([])],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(TabsPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create',()=> {
     expect(component).toBeTruthy();
   });
-
+  /*
   it('should increment the counter', () => {
     component.increment();
 
@@ -42,5 +48,5 @@ describe('Tab1Page', () => {
 
     expect(component.count).toBe(0);
     expect(value.textContent?.trim()).toBe('0');
-  });
+  }); */
 });
