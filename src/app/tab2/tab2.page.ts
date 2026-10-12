@@ -37,6 +37,13 @@ export class Tab2Page implements OnInit {
     this.counterService.counters().reduce((num,saved) => num + saved.value, 0),
   );
 
+  //BONUS A: zobrazit průměr hodnot uložených počítadel
+  readonly prumer = computed(() => {
+    const pocitadla = this.counterService.counters();
+    // length === 0 (nedelit nulou)
+    return pocitadla.length === 0 ? 0 : this.celkem() / pocitadla.length;
+  });
+
   //3) umožnit vyhledávání podle názvu
   readonly filtrovane = computed(() => {
     const termin = this.vyhledani().trim().toLowerCase();

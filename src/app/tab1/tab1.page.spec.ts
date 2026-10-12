@@ -56,7 +56,7 @@ describe('Tab1Page', () => {
   });
   */
  it('should pass the saved counter to CounterService.add()',async() => {
-  await component.onSaved(saved);
+  await component.poUlozeni(saved);
 
   expect(counterServiceMock.add).toHaveBeenCalledTimes(1);
   expect(counterServiceMock.add).toHaveBeenCalledWith(saved);

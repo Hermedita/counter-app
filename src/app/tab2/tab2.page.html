@@ -22,6 +22,10 @@
 
     <!-- 1) zobrazit součet hodnot všech uložených počítadel -->
     <p>Součet kalkulaček: <strong>{{celkem()}}</strong></p>
+
+    <!-- BONUS) zobrazit prumer hodnot všech uložených počítadel -->
+    <p>Průměr hodnot: <strong>{{prumer() | number: '1.0-2'}}</strong></p>
+
     <!-- 3) umožnit vyhledávání podle názvu -->
     <ion-searchbar
       placeholder="Hledat podle názvu"
