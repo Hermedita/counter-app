@@ -15,13 +15,30 @@
   } @else {
     <div class="history-header">
       <p>Počet záznamů: {{ counterService.counters().length }}</p>
-      <ion-button color="danger" fill="outline" size="small" (click)="clear()">
+      <ion-button color="danger" fill="outline" size="small" (click)="vymazat()">
         Vymazat vše
       </ion-button>
     </div>
 
+    <!-- 1) zobrazit součet hodnot všech uložených počítadel -->
+    <p>Součet kalkulaček: <strong>{{celkem()}}</strong></p>
+    <!-- 3) umožnit vyhledávání podle názvu -->
+    <ion-searchbar
+      placeholder="Hledat podle názvu"
+      [debounce]="200"
+      (ionInput)="vyhledani.set($any($event).detail.value ?? '')"
+    ></ion-searchbar>
+
+    <!-- 2) umožnit řazení historie -->
+    <ion-select label="Řadit podle" [value]="seradit()" (ionChange)="seradit.set($event.detail.value)">
+      <ion-select-option value="nejnovejsi">Nejnovější</ion-select-option>
+      <ion-select-option value="nejstarsi">Nejstarší</ion-select-option>
+      <ion-select-option value="nazev">Název (A-Z)</ion-select-option>
+      <ion-select-option value="nejvetsiHodnota">Hodnota (sestupně)</ion-select-option>
+    </ion-select>
+    
     <ion-list>
-      @for (counter of counterService.counters(); track counter.id) {
+      @for (counter of viditelne(); track counter.id) {
         <ion-item>
           <ion-label>
             <h2>{{ counter.name }}</h2>
@@ -29,18 +46,31 @@
           </ion-label>
 
           <ion-note slot="end">{{ counter.value }}</ion-note>
-
+        
           <ion-button
             slot="end"
             color="danger"
             fill="clear"
             aria-label="Odstranit záznam"
-            (click)="remove(counter.id)"
-          >
-            Odstranit
-          </ion-button>
+            (click)="remove(counter.id)">Odstranit</ion-button>
+        </ion-item>
+      } @empty {
+        <ion-item>
+          <ion-label>Nic nebylo nalezeno.</ion-label>
         </ion-item>
       }
     </ion-list>
   }
+    <ion-alert
+    [isOpen]="vymazatOpen()"
+    header="Vymazat historii?"
+    message="Tato akce vymaže všechna uložená počítadla."
+    [buttons]="alertButtons"
+    (didDismiss)="poZavreniAlertu($event)"></ion-alert>
+
+    <ion-toast
+    [isOpen]="toastOpen()"
+    message="Záznam byl odstraněn"
+    [duration]="1800"
+    (didDismiss)="toastOpen.set(false)"></ion-toast>
 </ion-content>
