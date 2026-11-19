@@ -23,9 +23,18 @@ export class Tab2Page implements OnInit {
   readonly vyhledani = signal('');
   readonly vymazatOpen = signal(false);
   readonly toastOpen = signal(false);
+  readonly auth = inject(FirebaseAuthService);
+  readonly authError = signal('');
 
   async ngOnInit(): Promise<void> {
     await this.counterService.initialize();
+
+    try {
+      await this.auth.initialize();
+    } catch (error) {
+      console.error(error);
+      this.authError.set('Přihlášení se nezdařilo. Zkontrolujte konfiguraci.');
+    }
   }
 
   async clear(): Promise<void> {

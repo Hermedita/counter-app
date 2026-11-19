@@ -13,8 +13,7 @@ ion-list,
 }
 
 .state-message {
-  color: var(--ion-color-medium);
-  text-align: center;
+  overflow-wrap: anywhere;
 }
 
 ion-note {
